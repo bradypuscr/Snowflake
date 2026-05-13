@@ -2,17 +2,15 @@
 
 Administrative scripts for generating and sending HTML reports from Snowflake to active users with the `ACCOUNTADMIN` role.
 
-> Note: at the time of this review, the `.sql` scripts are in the project root. This README lives in `Admin_Reports/` and references those files with relative paths.
-
 ## Contents
 
 | Script | Type | Purpose |
 | --- | --- | --- |
-| [`../send_account_usage_report.sql`](../send_account_usage_report.sql) | Procedure | Creates `UTIL_DB.ADMIN.SEND_ACCOUNT_USAGE_REPORT(REPORT_TYPE)` to send weekly or monthly account usage reports. |
-| [`../weekly_account_usage_report.sql`](../weekly_account_usage_report.sql) | Task | Schedules the weekly account usage report every Monday at 7:00 AM Costa Rica time. |
-| [`../monthly_account_usage_report.sql`](../monthly_account_usage_report.sql) | Task | Schedules the monthly account usage report on the 1st day of each month at 7:00 AM Costa Rica time. |
-| [`../send_accountadmin_db_report.sql`](../send_accountadmin_db_report.sql) | Procedure | Creates `UTIL_DB.ADMIN.SEND_ACCOUNTADMIN_DB_REPORT()` to send a monthly database inventory to `ACCOUNTADMIN` users. |
-| [`../monthly_accountadmin_db_report.sql`](../monthly_accountadmin_db_report.sql) | Task | Schedules the monthly database inventory on the 1st day of each month at 7:15 AM Costa Rica time. |
+| [`send_account_usage_report.sql`](send_account_usage_report.sql) | Procedure | Creates `UTIL_DB.ADMIN.SEND_ACCOUNT_USAGE_REPORT(REPORT_TYPE)` to send weekly or monthly account usage reports. |
+| [`weekly_account_usage_report.sql`](weekly_account_usage_report.sql) | Task | Schedules the weekly account usage report every Monday at 7:00 AM Costa Rica time. |
+| [`monthly_account_usage_report.sql`](monthly_account_usage_report.sql) | Task | Schedules the monthly account usage report on the 1st day of each month at 7:00 AM Costa Rica time. |
+| [`send_accountadmin_db_report.sql`](send_accountadmin_db_report.sql) | Procedure | Creates `UTIL_DB.ADMIN.SEND_ACCOUNTADMIN_DB_REPORT()` to send a monthly database inventory to `ACCOUNTADMIN` users. |
+| [`monthly_accountadmin_db_report.sql`](monthly_accountadmin_db_report.sql) | Task | Schedules the monthly database inventory on the 1st day of each month at 7:15 AM Costa Rica time. |
 
 ## Account Usage Report
 
