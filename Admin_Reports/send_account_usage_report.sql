@@ -772,6 +772,15 @@ def main(session, report_type):
     # Note: LAST_SUCCESS_LOGIN reflects the last successful authentication,
     # not the last query.  A user who authenticates but issues no queries
     # is still considered active.
+    #
+    # SYSTEM USER EXCLUSION:
+    # Snowflake creates internal/system users that never log in interactively:
+    #   - 'default'        : internal Snowflake placeholder user
+    #   - 'SNOWFLAKE'      : system user for internal operations
+    #   - 'OPENFLOW_USER'  : service account for Openflow connectors
+    #   - 'runtime-%'      : ephemeral runtime users for serverless features
+    # These are excluded because they are not human users and would always
+    # appear as "Never logged in", creating noise in the report.
     inactive_users = session.sql(
         "SELECT NAME, EMAIL, "
         "COALESCE(TO_VARCHAR(LAST_SUCCESS_LOGIN, 'YYYY-MM-DD'), 'Never') AS LAST_LOGIN, "
@@ -781,6 +790,8 @@ def main(session, report_type):
         "WHERE DELETED_ON IS NULL AND DISABLED = FALSE "
         "AND (LAST_SUCCESS_LOGIN IS NULL "
         "     OR LAST_SUCCESS_LOGIN < DATEADD('day', -30, CURRENT_TIMESTAMP())) "
+        "AND NAME NOT IN ('default', 'SNOWFLAKE', 'OPENFLOW_USER') "
+        "AND NAME NOT LIKE 'runtime-%' "
         "ORDER BY DAYS_INACTIVE DESC NULLS LAST LIMIT 20"
     ).collect()
 
